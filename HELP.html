@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>HACKBOX - Aide & Documentation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0f2027 0%, #2c5364 100%);
+      color: #f1f1f1;
+      font-family: 'Share Tech Mono', 'Fira Mono', 'Consolas', monospace;
+      letter-spacing: 0.02em;
+      overflow-x: hidden;
+    }
+    /* --- BANDEAU NAVBAR CYBERPUNK --- */
+    .cyber-navbar {
+      background: linear-gradient(90deg, #181c23 60%, #00ffe7 180%);
+      box-shadow: 0 4px 24px #00ffe755, 0 0 0 #ff00cc00;
+      border-bottom: 2px solid #00ffe7;
+      padding: 0.7em 0 0.7em 0;
+      position: relative;
+      z-index: 10;
+    }
+    .cyber-navbar .cyber-title {
+      color: #00ffe7;
+      font-family: 'Orbitron', 'Share Tech Mono', monospace;
+      font-weight: 700;
+      font-size: 2.1rem;
+      letter-spacing: 0.08em;
+      text-shadow: 0 0 12px #00ffe7, 0 0 20px #ff00cc88;
+      margin: 0 auto;
+      text-align: center;
+      display: block;
+      user-select: none;
+    }
+    .cyber-navbar:before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 100%;
+      transform: translateX(-50%);
+      width: 220px;
+      height: 6px;
+      background: linear-gradient(90deg, #ff00cc 10%, #00ffe7 90%);
+      border-radius: 8px;
+      box-shadow: 0 0 24px #ff00cc99;
+      opacity: 0.7;
+    }
+    @media (max-width: 600px) {
+      .cyber-navbar .cyber-title { font-size: 1.2rem; }
+      .cyber-navbar:before { width: 120px; height: 4px; }
+    }
+    /* --- FOND ANIME CYBERPUNK --- */
+    .cyber-bg {
+      position: fixed;
+      z-index: 0;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      opacity: 0.25;
+    }
+    /* --- MENU & INPUT --- */
+    .anchor-menu {
+      position: sticky;
+      top: 30px;
+      align-self: flex-start;
+      height: max-content;
+      z-index: 2;
+      background: rgba(24,28,35,0.98);
+      border-radius: 12px;
+      box-shadow: 0 0 20px #00ffe7aa, 0 0 8px #ff00cc55;
+      padding-top: 1.5em;
+      padding-bottom: 1.5em;
+      border: 2px solid #ff00cc;
+      overflow: visible;
+    }
+    .neon-input {
+      background:rgba(0,0,0,0.85);
+      color:#00ffe7;
+      border:2px solid #ff00cc;
+      box-shadow:0 0 8px #00ffe7aa, 0 0 12px #ff00cc88 inset;
+      outline:none;
+      font-family:'Share Tech Mono',monospace;
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+    .neon-input:focus {
+      border:2px solid #00ffe7;
+      box-shadow:0 0 16px #00ffe7cc, 0 0 16px #ff00ccbb inset;
+    }
+    .anchor-menu .list-group-item {
+      background: transparent;
+      color: #00ffe7;
+      border: none;
+      font-family: 'Orbitron', 'Share Tech Mono', monospace;
+      font-size: 1.05em;
+      letter-spacing: 0.03em;
+      transition: background 0.2s, color 0.2s, border-left 0.2s;
+      border-left: 4px solid transparent;
+      display: flex; align-items: center;
+      gap: 0.6em;
+    }
+    .anchor-menu .list-group-item svg {
+      width: 1.2em; height: 1.2em; fill: #ff00cc; opacity: 0.9; margin-right: 0.2em;
+      transition: fill 0.2s;
+    }
+    .anchor-menu .list-group-item:hover,
+    .anchor-menu .list-group-item.active {
+      background: linear-gradient(90deg,#00ffe7 10%,#ff00cc 90%);
+      color: #181c23;
+      font-weight: bold;
+      border-left: 4px solid #ff00cc;
+      box-shadow: 0 0 12px #ff00cc88;
+      text-shadow: 0 0 10px #fff;
+    }
+    .anchor-menu .list-group-item:hover svg,
+    .anchor-menu .list-group-item.active svg {
+      fill: #181c23;
+    }
+    @media (max-width: 991px) {
+      .anchor-menu { position: static; margin-bottom: 2em; box-shadow: none; background: none; padding: 0; border: none; }
+    }
+    /* --- CARDS CYBERPUNK --- */
+    .card {
+      background: rgba(24,28,35,0.93);
+      border: 2px solid #00ffe7cc;
+      border-radius: 16px;
+      box-shadow: 0 0 40px #ff00cc33, 0 0 8px #00ffe7cc;
+      margin-bottom: 2em;
+      transition: box-shadow 0.2s, border 0.2s;
+      position: relative;
+      overflow: visible;
+    }
+    .card:before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 18px;
+      border: 2px solid transparent;
+      background: linear-gradient(120deg, #00ffe7 0%, #ff00cc 100%);
+      filter: blur(12px);
+      opacity: 0.3;
+      z-index: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .card:hover {
+      box-shadow: 0 0 32px #ff00cc99, 0 0 32px #00ffe7cc, 0 0 64px #ff00cc77;
+      border-color: #ff00cc;
+    }
+    .card:hover:before { opacity: 0.7; }
+    .card-header {
+      background: #23272f;
+      color: #ff00cc;
+      font-weight: bold;
+      font-size: 1.2em;
+      border-bottom: 1px solid #00ffe7;
+      letter-spacing: 0.04em;
+      text-shadow: 0 0 6px #ff00cc88;
+      position: relative;
+      z-index: 1;
+    }
+    .card-body { color: #f1f1f1; position: relative; z-index: 1; }
+    /* --- HIGHLIGHT MOTS-CLES --- */
+    mark {
+      background: linear-gradient(90deg,#ff00cc 30%,#00ffe7 100%);
+      color: #181c23;
+      border-radius: 4px;
+      padding: 0 3px;
+      font-weight: bold;
+      box-shadow: 0 0 8px #00ffe799;
+    }
+    /* --- BOUTON RETOUR EN HAUT --- */
+    #backToTop {
+      position: fixed;
+      bottom: 36px; right: 36px;
+      z-index: 1000;
+      background: linear-gradient(90deg,#00ffe7 10%,#ff00cc 90%);
+      color: #181c23;
+      border: none;
+      border-radius: 50%;
+      box-shadow: 0 0 16px #00ffe7bb, 0 0 24px #ff00cc88;
+      width: 56px; height: 56px;
+      font-size: 2rem;
+      display: none;
+      align-items: center; justify-content: center;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    #backToTop:hover {
+      background: linear-gradient(90deg,#ff00cc 10%,#00ffe7 90%);
+      box-shadow: 0 0 32px #ff00cc, 0 0 32px #00ffe7;
+      color: #fff;
+    }
+    /* --- SCROLLSPY ACTIVE --- */
+    .anchor-menu .list-group-item.scrollspy-active {
+      outline: 2px solid #ff00cc;
+      outline-offset: -2px;
+      background: linear-gradient(90deg,#ff00cc 10%,#00ffe7 90%);
+      color: #181c23;
+      font-weight: bold;
+      box-shadow: 0 0 14px #ff00cc99;
+    }
+    /* --- ACCESSIBILITE --- */
+    html { scroll-behavior: smooth; }
+    ::selection { background: #ff00cc55; }
+    a, a:visited { color: #00ffe7; text-decoration: underline dotted #ff00cc; }
+    a:hover { color: #ff00cc; text-decoration: underline solid #00ffe7; }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="cyber-navbar mb-4">
+    <span class="cyber-title">HACKBOX <span style="color:#ff00cc">&ndash;</span> Aide &amp; Documentation</span>
+  </div>
+  <!-- FOND ANIME SVG -->
+  <svg class="cyber-bg" width="100vw" height="100vh" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="cybergrad" x1="0" x2="1" y1="0" y2="1">
+        <stop offset="0%" stop-color="#00ffe7"/>
+        <stop offset="100%" stop-color="#ff00cc"/>
+      </linearGradient>
+    </defs>
+    <g stroke="url(#cybergrad)" stroke-width="2">
+      <polyline points="100,100 400,200 700,100 1000,300 1300,200 1600,400" opacity="0.3"/>
+      <polyline points="200,900 500,700 800,900 1100,700 1400,900 1700,700" opacity="0.25"/>
+      <polyline points="0,540 1920,540" opacity="0.12"/>
+      <polyline points="960,0 960,1080" opacity="0.12"/>
+      <polyline points="0,200 1920,200" opacity="0.08"/>
+      <polyline points="0,880 1920,880" opacity="0.08"/>
+    </g>
+  </svg>
+  <div class="container-fluid">
+    <div class="row">
+      <nav class="col-lg-3 anchor-menu d-none d-lg-block">
+        <input id="menuSearch" type="text" class="form-control mb-3 neon-input" placeholder="Rechercher une section..." autofocus tabindex="1" style="background:rgba(0,0,0,0.85);color:#00ffe7;border:1.5px solid #ff00cc;box-shadow:0 0 8px #00ffe7aa;outline:none;font-family:'Share Tech Mono',monospace;" oninput="filterMenu()">
+        <div class="list-group" id="menuList">
+          <a href="#menu-scan" class="list-group-item"><svg viewBox="0 0 24 24"><path d="M3 3h4v2H5v2H3V3zm14 0h4v4h-2V5h-2V3zm4 14v4h-4v-2h2v-2h2zm-16 2h2v2H3v-4h2v2zm4-10h6v2h-6zm0 4h6v2h-6z"/></svg>1. Scan & Fingerprinting</a>
+          <a href="#menu-vuln" class="list-group-item"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>2. Vulnérabilités & Exploitation</a>
+          <a href="#menu-bruteforce" class="list-group-item"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14H7v-2h5v2zm0-4H7v-2h5v2zm0-4H7V7h5v2zm7 8h-5v-2h5v2zm0-4h-5v-2h5v2zm0-4h-5V7h5v2z"/></svg>3. Authentification & Bruteforce</a>
+          <a href="#menu-fuzz" class="list-group-item"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-6 4v2h-2V7h2zm0 4v2h-2v-2h2zm0 4v2h-2v-2h2z"/></svg>4. Fuzzing & Tests d'injection</a>
+          <a href="#menu-osint" class="list-group-item"><svg viewBox="0 0 24 24"><path d="M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16zm0 2a6 6 0 0 1 6 6c0 1.31-.42 2.52-1.13 3.5l-8.37-8.37A5.97 5.97 0 0 1 12 6zm-6 6c0-1.31.42-2.52 1.13-3.5l8.37 8.37A5.97 5.97 0 0 1 12 18a6 6 0 0 1-6-6zm6 8a8 8 0 1 1 0-16 8 8 0 0 1 0 16z"/></svg>5. Reconnaissance & OSINT</a>
+          <a href="#menu-loot" class="list-group-item"><svg viewBox="0 0 24 24"><path d="M20.94 11c-.46-4.17-4.18-7.5-8.44-7.5S4.52 6.83 4.06 11H2l1.29 1.29c.19.19.44.29.71.29h16c.27 0 .52-.1.71-.29L22 11h-1.06zM5.12 13c.57 2.36 2.68 4 5.38 4s4.81-1.64 5.38-4H5.12z"/></svg>6. Post-exploitation & Loot</a>
+          <a href="#menu-report" class="list-group-item"><svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 8h14v-2H7v2zm0-4h14v-2H7v2zm0-8v2h14V5H7v2z"/></svg>7. Rapports & Export <span style='color:#00ffe7'>(dossiers datés)</span></a>
+          <a href="#menu-offensive" class="list-group-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-5l4.28 2.64L11 16.5z"/></svg>8. Outils offensifs & Exploitation</a>
+          <a href="#menu-autoloot" class="list-group-item"><svg viewBox="0 0 24 24"><path d="M20.94 11c-.46-4.17-4.18-7.5-8.44-7.5S4.52 6.83 4.06 11H2l1.29 1.29c.19.19.44.29.71.29h16c.27 0 .52-.1.71-.29L22 11h-1.06zM5.12 13c.57 2.36 2.68 4 5.38 4s4.81-1.64 5.38-4H5.12z"/></svg>9. Loot automatique</a>
+          <a href="#menu-escalade" class="list-group-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-5l4.28 2.64L11 16.5z"/></svg>10. Escalade de privilèges</a>
+          <a href="#menu-dorks" class="list-group-item"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>11. Google Dorks</a>
+          <a href="#menu-help" class="list-group-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 17.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm2.07-7.75l-.9.92C12.45 13.9 12 14.5 12 16h-1.5v-.5c0-1 .45-1.99 1.17-2.71l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-1.65 1.35-3 3-3s3 1.35 3 3c0 .88-.36 1.68-.93 2.25z"/></svg>H. Aide & Documentation</a>
+        </div>
+      </nav>
+      <main class="col-lg-9">
+        <div class="section">
+          <h2 id="menu-scan">1. Scan & Fingerprinting</h2>
+          <div class="card"><div class="card-body">
+            <b>Objectif :</b> Découvrir les services, ports ouverts et technologies d’un ordinateur ou d’un site web cible.<br><br>
+            <b>Pour qui ?</b> Accessible à tous, même sans aucune expérience technique.<br><br>
+            <b>Fonctionnement détaillé :</b>
+            <ul>
+              <li><b>Adresse cible :</b> Entrez simplement l’adresse IP (ex : <code>192.168.1.10</code>) ou le nom du site (ex : <code>scanme.nmap.org</code>).</li>
+              <li><b>Ports :</b> Si vous ne savez pas, laissez vide : HACKBOX scannera les ports les plus courants (web, SSH, FTP, etc.).</li>
+              <li><b>Résultat :</b> La liste des ports ouverts, les services détectés (ex : HTTP, SSH), les versions logicielles et parfois même le système d’exploitation.</li>
+              <li><b>Pourquoi c’est utile ?</b> Cela permet de savoir « ce qui est exposé » sur une machine, étape de base de tout pentest.</li>
+            </ul>
+            <b>Exemple :</b> Entrez <code>scanme.nmap.org</code> et validez. Vous verrez apparaître les services accessibles publiquement.<br><br>
+            <b>Export :</b> Les résultats sont enregistrés dans <code>exports/&lt;date&gt;/scan/</code> (formats .md/.json pour une lecture ou un partage facile).
+          </div></div>
+        </div>
+        <div class="section">
+          <h2 id="menu-vuln">2. Vulnérabilités & Exploitation</h2>
+          <div class="card"><div class="card-body">
+            <b>Objectif :</b> Rechercher automatiquement des failles de sécurité (CVE, exploits connus) sur la cible.<br><br>
+            <b>Pour qui ?</b> Idéal pour les débutants ou les curieux qui veulent savoir si une machine est vulnérable.<br><br>
+            <b>Menus et sous-menus :</b>
+            <ul>
+              <li><b>Scan CVE :</b> Recherche dans une base de données mondiale les failles connues pour chaque service détecté.</li>
+              <li><b>Exploits :</b> Propose des liens ou des commandes pour tester l’exploitation de ces failles (toujours à but pédagogique).</li>
+              <li><b>Tests spécifiques :</b> Heartbleed, Shellshock, etc.</li>
+            </ul>
+            <b>Champs demandés :</b>
+            <ul>
+              <li><b>Cible :</b> Adresse IP ou nom de domaine à scanner (ex : <code>192.168.1.10</code>, <code>example.com</code>)</li>
+              <li><b>Type de scan :</b> Rapide (services principaux) ou Complet (tous les ports/services)</li>
+              <li><b>Test spécifique :</b> (optionnel) Choix d’un test ciblé (Heartbleed, Shellshock...)</li>
+              <li><b>Export :</b> Voulez-vous sauvegarder les résultats ? (Oui/Non)</li>
+            </ul>
+            <b>Explications :</b>
+            <ul>
+              <li>Le scan rapide va plus vite mais peut rater des services ou failles secondaires.</li>
+              <li>Le scan complet est plus long mais exhaustif.</li>
+              <li>Chaque vulnérabilité trouvée est expliquée (niveau de risque, comment la corriger, etc.).</li>
+            </ul>
+            <b>Exemple d’utilisation :</b>
+            <ul>
+              <li>Saisir 192.168.1.10, choisir scan rapide, consulter les failles détectées.</li>
+              <li>Lancer un test Heartbleed sur un serveur SSL.</li>
+            </ul>
+            <b>Export :</b> <code>exports/&lt;date&gt;/vuln/</code> (rapports détaillés).
+          </div></div>
+        </div>
+        <div class="section">
+          <h2 id="menu-bruteforce">3. Authentification & Bruteforce</h2>
+          <div class="card"><div class="card-body">
+            <b>Objectif :</b> Tester la robustesse des mots de passe sur des services comme SSH, FTP, HTTP.<br><br>
+            <b>Pour qui ?</b> Débutants, administrateurs, pentesters et toute personne souhaitant vérifier la sécurité des accès.<br><br>
+            <b>Sous-menus détaillés :</b>
+            <ul>
+              <li><b>1. Brute-force SSH :</b> Teste toutes les combinaisons user/pass sur un serveur SSH. Gère délais, erreurs, logs détaillés. Supporte userlist et passlist personnalisés.</li>
+              <li><b>2. Brute-force FTP :</b> Idem pour le protocole FTP. Prend en compte les erreurs FTP spécifiques et les délais entre tentatives.</li>
+              <li><b>3. Brute-force HTTP :</b> Teste des identifiants sur des formulaires web (POST/GET), Basic/Digest Auth, avec détection de succès/échec personnalisable (codes HTTP, chaînes dans la réponse, etc.).</li>
+              <li><b>4. Password Spraying :</b> Tente un même mot de passe sur une liste d’utilisateurs pour éviter les lockouts. Multi-protocole (SSH, FTP, HTTP). Gère les délais et la détection de blocage.</li>
+              <li><b>5. Détection lockout :</b> Analyse intelligente des résultats pour détecter les blocages de comptes, ralentissements, erreurs spécifiques (codes 429, 403, messages d’alerte, etc.). Génère un rapport d’alerte.</li>
+            </ul>
+            <b>Champs demandés (avec exemples) :</b>
+            <ul>
+              <li><b>Cible :</b> IP ou URL du service à tester (ex : <code>192.168.1.10</code>, <code>ftp.site.com</code>, <code>http://site.com/login</code>)</li>
+              <li><b>Userlist :</b> Fichier texte contenant les noms d’utilisateurs à tester (exemple : <code>users.txt</code> avec un utilisateur par ligne)</li>
+              <li><b>Passlist :</b> Fichier texte contenant les mots de passe à tester (exemple : <code>passwords.txt</code> avec un mot de passe par ligne)</li>
+              <li><b>Mots-clés succès/échec :</b> Chaînes ou codes à rechercher dans la réponse pour déterminer si la connexion a réussi ou échoué (ex : <code>Welcome</code>, <code>Login failed</code>, code HTTP 200/401, etc.)</li>
+              <li><b>Délais/tentatives :</b> Temps d’attente entre les essais (en secondes), nombre max de tentatives avant pause (ex : 0.5s, 5 tentatives)</li>
+              <li><b>Protocole :</b> (pour le password spraying) : <code>ssh</code>, <code>ftp</code>, <code>http</code></li>
+              <li><b>Champs formulaire HTTP :</b> (pour brute-force HTTP) : <code>user_field</code>, <code>pass_field</code>, <code>method</code> (POST/GET), <code>extra_data</code> (pour champs additionnels)</li>
+            </ul>
+            <b>Explications pédagogiques et conseils :</b>
+            <ul>
+              <li>Le brute-force classique essaie chaque combinaison user/pass sur la cible (attention au risque de lockout sur certains services).</li>
+              <li>Le password spraying limite ce risque en testant un mot de passe courant sur toute la liste d’utilisateurs avant de changer de mot de passe.</li>
+              <li>La détection lockout analyse les réponses pour repérer les blocages, ralentissements, ou messages suspects et vous alerte automatiquement.</li>
+              <li>Les logs détaillent chaque tentative, succès, échec, erreur rencontrée, et sont exportables en JSON, Markdown, HTML.</li>
+              <li>Pour les formulaires HTTP, adaptez les champs <code>user_field</code> et <code>pass_field</code> selon le nom réel dans le code source du formulaire.</li>
+              <li>Respectez toujours la légalité et obtenez une autorisation avant de tester un service qui ne vous appartient pas.</li>
+            </ul>
+            <b>Exemples d’utilisation :</b>
+            <ul>
+              <li>Lancer un brute-force SSH sur <code>192.168.1.10</code> avec <code>users.txt</code> et <code>passwords.txt</code>, délai de 1s entre tentatives.</li>
+              <li>Faire un password spraying HTTP sur <code>http://site.com/login</code> avec le mot de passe <code>Welcome2024!</code> sur tous les utilisateurs de <code>users.txt</code>.</li>
+              <li>Détecter un lockout après 5 échecs consécutifs sur un serveur FTP.</li>
+            </ul>
+            <b>Exemple de userlist :</b><br>
+            <pre>admin
+root
+jdoe
+jsmith
+</pre>
+            <b>Exemple de passlist :</b><br>
+            <pre>password
+123456
+Welcome2024!
+</pre>
+            <b>Export :</b> Les résultats sont enregistrés dans <code>exports/&lt;date&gt;/bruteforce_ssh/</code>, <code>bruteforce_ftp/</code>, <code>bruteforce_http/</code>, ou <code>password_spraying/</code> selon le module (formats .json/.md/.html avec logs détaillés).
+            <br><b>Conseil sécurité :</b> Utilisez un délai (>0.5s) pour éviter les blocages, surveillez les alertes lockout, et ne testez jamais sans autorisation.
+          </div></div>
+        </div>
+        <div class="section">
+          <h2 id="menu-fuzz">4. Fuzzing & Tests d'injection</h2>
+          <div class="card"><div class="card-body">
+            <b>Objectif :</b> Détecter des vulnérabilités d’injection (XSS, LFI, SQLi, etc.) sur des services web, FTP, SMTP.<br><br>
+            <b>Pour qui ?</b> Pentesters, développeurs, administrateurs, débutants curieux de la sécurité applicative.<br><br>
+            <b>Sous-menus détaillés :</b>
+            <ul>
+              <li><b>1. Fuzzing HTTP :</b> Injection automatique de payloads sur des formulaires, URLs, headers, paramètres GET/POST, cookies. Détection de XSS, LFI, RCE, etc.</li>
+              <li><b>2. Fuzzing FTP :</b> Teste les commandes FTP avec des payloads pour détecter des failles (buffer overflow, traversal, etc.).</li>
+              <li><b>3. Fuzzing SMTP :</b> Injection de payloads dans les champs d’un serveur mail (ex : From, Subject, Body) pour détecter des failles de spoofing, injection, etc.</li>
+            </ul>
+            <b>Champs demandés (avec exemples) :</b>
+            <ul>
+              <li><b>Cible :</b> URL, IP ou serveur à tester (ex : <code>http://site.com/page</code>, <code>ftp.site.com</code>, <code>mail.site.com</code>)</li>
+              <li><b>Payloads :</b> Liste ou fichier de chaînes d’injection à tester (ex : <code>payloads.txt</code>, ou liste intégrée de XSS, LFI, SQLi, etc.)</li>
+              <li><b>Paramètres à fuzz :</b> Nom(s) des champs/paramètres à injecter (ex : <code>search</code>, <code>id</code>, <code>username</code>, <code>cookie</code>)</li>
+              <li><b>Mots-clés succès/échec :</b> Chaînes à rechercher dans la réponse pour repérer une injection réussie (ex : <code>&lt;script&gt;</code>, <code>root:x:</code>, <code>SQL syntax</code>, etc.)</li>
+              <li><b>Délais/tentatives :</b> Temps d’attente entre chaque essai, nombre max de tentatives (ex : 0.2s, 100 payloads max)</li>
+            </ul>
+            <b>Explications pédagogiques et conseils :</b>
+            <ul>
+              <li>Le fuzzing consiste à injecter des valeurs inattendues dans les champs d’entrée pour repérer des comportements anormaux ou des failles.</li>
+              <li>Les payloads intégrés couvrent XSS, LFI, RCE, SQLi, path traversal, etc. Vous pouvez aussi fournir vos propres payloads.</li>
+              <li>Pour chaque injection, le toolkit analyse la réponse pour détecter des indices de vulnérabilité (ex : exécution de code, affichage inattendu, erreurs SQL, etc.).</li>
+              <li>Les logs détaillent chaque tentative, succès, échec, et sont exportables en JSON, Markdown, HTML.</li>
+              <li>Pour les tests sur FTP/SMTP, ciblez des serveurs de test ou obtenez une autorisation explicite.</li>
+            </ul>
+            <b>Exemples d’utilisation :</b>
+            <ul>
+              <li>Fuzzer le champ <code>search</code> d’un site avec une liste de payloads XSS pour détecter des injections de script.</li>
+              <li>Tester un champ <code>id</code> avec des payloads LFI pour voir si des fichiers sensibles sont accessibles.</li>
+              <li>Injecter des commandes dans un serveur FTP pour repérer des failles de buffer overflow.</li>
+            </ul>
+            <b>Exemple de payloads.txt :</b><br>
+            <pre>' OR '1'='1
+&lt;script&gt;alert(1)&lt;/script&gt;
+../../../../etc/passwd
+%0aMAIL FROM: attacker@example.com
+</pre>
+            <b>Export :</b> Les résultats sont enregistrés dans <code>exports/&lt;date&gt;/fuzzing/</code> (formats .json/.md/.html avec logs détaillés).
+            <br><b>Conseil sécurité :</b> Ne jamais fuzzer sans autorisation, privilégiez toujours des environnements de test, et analysez les logs pour détecter les injections réussies.
+          </div></div>
+        </div>
+        <div class="section">
+          <h2 id="menu-osint">5. Reconnaissance & OSINT</h2>
+          <div class="card"><div class="card-body">
+            <b>Objectif :</b> Collecter un maximum d’informations publiques sur une cible (IP, domaine, email, user, etc.) pour préparer les phases d’attaque ou d’audit.<br><br>
+            <b>Pour qui ?</b> Pentesters, blue team, journalistes, particuliers souhaitant vérifier leur propre exposition sur Internet.<br><br>
+            <b>Sous-menus détaillés :</b>
+            <ul>
+              <li><b>1. Recherche Shodan :</b> Interroge l’API Shodan pour obtenir les services exposés, bannières, ports ouverts, vulnérabilités connues, géolocalisation, etc.</li>
+              <li><b>2. Google Dorks :</b> Génère et teste des requêtes avancées Google pour trouver des fichiers sensibles, backups, pages d’admin, fuites d’email, etc. Familles de dorks : fichiers, index, login, leaks, backups, vulnérabilités, etc.</li>
+              <li><b>3. Sherlock :</b> Recherche la présence d’un pseudo sur des centaines de sites sociaux et plateformes publiques.</li>
+              <li><b>4. Pastebin Leaks :</b> Recherche de fuites de données sur Pastebin (emails, credentials, tokens, etc.).</li>
+              <li><b>5. DNS Recon :</b> Bruteforce de sous-domaines, récupération de records DNS publics (A, MX, TXT, SPF, etc.).</li>
+              <li><b>6. Transparency Report :</b> Vérifie la réputation/phishing/malware d’un domaine via Google Transparency Report.</li>
+            </ul>
+            <b>Champs demandés (avec exemples) :</b>
+            <ul>
+              <li><b>Cible :</b> IP, domaine, email, pseudo, etc. (ex : <code>site.com</code>, <code>john.doe@gmail.com</code>, <code>jdoe</code>, <code>8.8.8.8</code>)</li>
+              <li><b>Type de cible :</b> <code>domain</code>, <code>email</code>, <code>user</code>, <code>ip</code></li>
+              <li><b>API Keys :</b> (optionnel) pour les services nécessitant une clé (Shodan, etc.)</li>
+              <li><b>Batch targets :</b> Liste de cibles à traiter en mode batch (ex : <code>targets.txt</code>)</li>
+              <li><b>Proxies :</b> (optionnel) pour anonymiser les requêtes (ex : <code>socks5://127.0.0.1:9050</code>)</li>
+            </ul>
+            <b>Explications pédagogiques et conseils :</b>
+            <ul>
+              <li>L’OSINT (Open Source Intelligence) consiste à collecter des infos accessibles publiquement pour dresser un profil de la cible.</li>
+              <li>Les Google Dorks permettent de trouver des ressources cachées ou sensibles grâce à des requêtes avancées (ex : <code>site:site.com ext:sql</code>).</li>
+              <li>Shodan permet de découvrir les services exposés d’une IP ou d’un domaine et d’identifier rapidement des failles connues.</li>
+              <li>Sherlock automatise la recherche de comptes sur des centaines de sites à partir d’un pseudo.</li>
+              <li>Le DNS bruteforce permet de découvrir des sous-domaines cachés ou oubliés.</li>
+              <li>Les résultats sont exportés et structurés par cible, avec logs détaillés.</li>
+            </ul>
+            <b>Exemples d’utilisation :</b>
+            <ul>
+              <li>Scanner <code>site.com</code> avec Shodan pour voir les ports ouverts et services exposés.</li>
+              <li>Lancer une recherche Google Dorks pour trouver des fichiers <code>.sql</code> ou <code>.bak</code> exposés sur un domaine.</li>
+              <li>Vérifier la présence d’un pseudo sur les réseaux sociaux avec Sherlock.</li>
+              <li>Faire un batch OSINT sur une liste d’emails pour détecter des fuites sur Pastebin.</li>
+            </ul>
+            <b>Exemple de familles de dorks générés :</b><br>
+            <pre>files
+index
+login
+leaks
+backups
+vuln
+</pre>
+            <b>Export :</b> Les résultats sont enregistrés dans <code>exports/&lt;date&gt;/osint/</code> (formats .json/.md/.html avec logs détaillés par cible).
+            <br><b>Conseil sécurité :</b> L’OSINT ne nécessite pas d’autorisation mais il faut respecter la vie privée et la législation sur les données personnelles.
+          </div></div>
+        </div>
+        <div class="section">
+          <h2 id="menu-loot">6. Post-exploitation & Loot</h2>
+          <div class="card"><div class="card-body">
+            <b>Objectif :</b> Automatiser la récupération de fichiers sensibles, tokens, credentials et artefacts post-exploitation sur une machine compromise.<br><br>
+            <b>Pour qui ?</b> Pentesters, red team, administrateurs, toute personne souhaitant valider l’impact d’une compromission.<br><br>
+            <b>Sous-menus détaillés :</b>
+            <ul>
+              <li><b>1. Loot automatique :</b> Recherche et exfiltration de fichiers sensibles (config, .ssh, .git, .env, tokens, cookies, clés API, credentials, etc.).</li>
+              <li><b>2. Extraction de tokens :</b> Recherche et extraction de tokens d’authentification (JWT, OAuth, API keys) dans fichiers, variables d’environnement, historiques.</li>
+              <li><b>3. Dump de cookies :</b> Extraction des cookies de navigateurs ou d’applications web pour réutilisation ou analyse.</li>
+              <li><b>4. Dump de profils :</b> Récupération de profils utilisateurs, historiques de commandes, fichiers d’historique (bash, zsh, powershell, etc.).</li>
+              <li><b>5. Extraction de mots de passe :</b> Recherche de mots de passe en clair dans fichiers, scripts, dumps mémoire, etc.</li>
+            </ul>
+            <b>Champs demandés (avec exemples) :</b>
+            <ul>
+              <li><b>Répertoire cible :</b> Dossier à analyser (ex : <code>/home/user/</code>, <code>C:\Users\bob\</code>)</li>
+              <li><b>Types de loot :</b> <code>config</code>, <code>ssh</code>, <code>git</code>, <code>env</code>, <code>token</code>, <code>cookie</code>, <code>history</code>, <code>profile</code>, etc.</li>
+              <li><b>Extensions ciblées :</b> <code>.env</code>, <code>.json</code>, <code>.db</code>, <code>.bak</code>, <code>.log</code>, etc.</li>
+              <li><b>Filtres personnalisés :</b> (optionnel) mots-clés à rechercher dans les fichiers (ex : <code>password=</code>, <code>api_key</code>, <code>token</code>)</li>
+            </ul>
+            <b>Explications pédagogiques et conseils :</b>
+            <ul>
+              <li>Le loot automatique scanne les dossiers à la recherche de fichiers ou de patterns typiques de secrets et credentials.</li>
+              <li>Les tokens et cookies extraits peuvent permettre de rebondir ou d’accéder à d’autres services.</li>
+              <li>Les exports sont structurés par type de loot et par cible pour faciliter l’analyse.</li>
+              <li>Veillez à ne pas extraire/diffuser de données sensibles sans autorisation.</li>
+              <li>Les logs détaillent chaque fichier trouvé, chaque secret extrait, et sont exportables en JSON, Markdown, HTML.</li>
+            </ul>
+            <b>Exemples d’utilisation :</b>
+            <ul>
+              <li>Looter tous les fichiers <code>.env</code> et <code>.json</code> dans <code>/var/www/</code> pour extraire des clés API ou secrets.</li>
+              <li>Extraire tous les tokens et cookies d’un profil utilisateur Windows.</li>
+              <li>Rechercher les mots de passe en clair dans les historiques bash et powershell.</li>
+            </ul>
+            <b>Exemple de patterns de loot :</b><br>
+            <pre>password=
+api_key
+secret
+jwt
+cookie
+</pre>
+            <b>Export :</b> Les résultats sont enregistrés dans <code>exports/&lt;date&gt;/loot/</code> (formats .json/.md/.html avec logs détaillés par type et par cible).
+            <br><b>Conseil sécurité :</b> Ne jamais extraire ni conserver de secrets sans autorisation, et toujours chiffrer les exports sensibles.
+          </div></div>
+        </div>
+        <div class="section">
+          <h2 id="menu-report">7. Rapports & Export</h2>
+          <div class="card"><div class="card-body">
+            <b>Objectif :</b> Générer des rapports globaux, exports journaliers, branding personnalisé.<br><br>
+            <b>Pour qui ?</b> Toute personne souhaitant synthétiser ou partager les résultats d’une session.<br><br>
+            <b>Champs demandés :</b>
+            <ul>
+              <li><b>Format :</b> txt, md, html</li>
+              <li><b>Branding/logo :</b> Personnalisation du rapport</li>
+              <li><b>Export :</b> Où sauvegarder le rapport</li>
+            </ul>
+            <b>Explications :</b>
+            <ul>
+              <li>Compile tous les résultats de la session en un rapport lisible et partageable, daté par jour.</li>
+              <li>Le branding permet d’ajouter un logo ou un style personnalisé au rapport.</li>
+              <li>Les exports sont organisés par date pour faciliter le suivi.</li>
+            </ul>
+            <b>Exemple d’utilisation :</b>
+            <ul>
+              <li>Générer un rapport Markdown avec tous les résultats du jour.</li>
+              <li>Exporter un rapport HTML pour un client avec branding personnalisé.</li>
+            </ul>
+            <b>Export :</b> <code>exports/&lt;date&gt;/report/</code> (rapports générés).
+          </div></div>
+        </div>
+        <div class="section">
+          <h2 id="menu-offensive">8. Outils offensifs & Exploitation</h2>
+          <div class="card"><div class="card-body">
+            <b>Objectif :</b> Générer et lancer des commandes d’exploitation (reverse shells, stagers, exploits externes).<br><br>
+            <b>Pour qui ?</b> Idéal pour s’initier à l’exploitation sans risque, chaque étape est expliquée.<br><br>
+            <b>Sous-menus :</b>
+            <ul>
+              <li>1. Génération de reverse shells (bash, powershell, etc.)</li>
+              <li>2. Génération de stagers Metasploit</li>
+            </ul>
+            <b>Champs demandés :</b>
+            <ul>
+              <li><b>Langage :</b> bash, python, powershell, etc.</li>
+              <li><b>Adresse IP/port :</b> Pour la connexion reverse</li>
+              <li><b>Export :</b> Voulez-vous sauvegarder le payload généré ? (Oui/Non)</li>
+            </ul>
+            <b>Explications :</b>
+            <ul>
+              <li>Propose des commandes prêtes à l’emploi à copier-coller pour obtenir un shell distant ou lancer un exploit.</li>
+              <li>Chaque sous-menu cible un type de payload ou d’exploitation différent.</li>
+              <li>Les résultats sont exportés pour une réutilisation rapide.</li>
+            </ul>
+            <b>Exemple d’utilisation :</b>
+            <ul>
+              <li>Générer un reverse shell bash pour une connexion sur 10.10.10.10:4444.</li>
+              <li>Créer un stager Metasploit prêt à utiliser.</li>
+            </ul>
+            <b>Export :</b> <code>exports/&lt;date&gt;/offensive/</code> (payloads générés).
+          </div></div>
+        </div>
+        <div class="section">
+          <h2 id="menu-autoloot">9. Loot automatique</h2>
+          <div class="card"><div class="card-body">
+            <b>Objectif :</b> Dump automatique de fichiers sensibles, tokens, cookies, etc.<br><br>
+            <b>Pour qui ?</b> Toute personne souhaitant automatiser la récupération de secrets sur une machine.<br><br>
+            <b>Champs demandés :</b>
+            <ul>
+              <li><b>Cible :</b> Répertoire à analyser</li>
+              <li><b>Type de loot :</b> Fichiers, tokens, cookies</li>
+              <li><b>Export :</b> Voulez-vous sauvegarder les résultats ? (Oui/Non)</li>
+            </ul>
+            <b>Explications :</b>
+            <ul>
+              <li>Scanne automatiquement les dossiers pour extraire tout ce qui est potentiellement sensible.</li>
+              <li>Peut cibler des chemins locaux ou distants selon le contexte d’accès.</li>
+              <li>Les résultats sont exportés et classés par date.</li>
+            </ul>
+            <b>Exemple d’utilisation :</b>
+            <ul>
+              <li>Dump de tous les fichiers secrets d’un répertoire web.</li>
+              <li>Extraction automatique de tokens d’un dossier d’application.</li>
+            </ul>
+            <b>Export :</b> <code>exports/&lt;date&gt;/autoloot/</code> (résultats et logs).
+          </div></div>
+        </div>
+        <div class="section">
+          <h2 id="menu-escalade">10. Escalade de privilèges</h2>
+          <div class="card"><div class="card-body">
+            <b>Objectif :</b> Rechercher des failles d’escalade de privilèges (sudo, SUID, services, UAC…).<br><br>
+            <b>Pour qui ?</b> Toute personne souhaitant vérifier la sécurité locale d’un système.<br><br>
+            <b>Champs demandés :</b>
+            <ul>
+              <li><b>Type de scan :</b> Local (machine courante)</li>
+              <li><b>Export :</b> Voulez-vous sauvegarder les résultats ? (Oui/Non)</li>
+            </ul>
+            <b>Explications :</b>
+            <ul>
+              <li>Recherche des binaires ou configurations permettant d’obtenir plus de privilèges sur la machine.</li>
+              <li>Affiche les chemins, permissions et risques associés à chaque découverte.</li>
+              <li>Les résultats sont exportés pour analyse et remédiation.</li>
+            </ul>
+            <b>Exemple d’utilisation :</b>
+            <ul>
+              <li>Détecter tous les binaires SUID sur une machine Linux.</li>
+              <li>Rechercher les droits sudo mal configurés.</li>
+            </ul>
+            <b>Export :</b> <code>exports/&lt;date&gt;/escalade/</code> (résultats et logs).
+          </div></div>
+        </div>
+        <div class="section">
+          <h2 id="menu-dorks">11. Google Dorks</h2>
+          <div class="card"><div class="card-body">
+            <b>Objectif :</b> Générer et tester automatiquement des requêtes Google Dorks pour OSINT.<br><br>
+            <b>Pour qui ?</b> Toute personne souhaitant trouver des infos sensibles exposées sur Google.<br><br>
+            <b>Champs demandés :</b>
+            <ul>
+              <li><b>Domaine/cible :</b> Domaine à cibler (ex : target.com)</li>
+              <li><b>Scraping :</b> Voulez-vous récupérer les résultats Google ? (Oui/Non)</li>
+              <li><b>Export :</b> Voulez-vous sauvegarder les résultats ? (Oui/Non)</li>
+            </ul>
+            <b>Explications :</b>
+            <ul>
+              <li>Génère des requêtes Google avancées pour trouver des fichiers sensibles, leaks, infos cachées sur un domaine.</li>
+              <li>Peut scraper les résultats pour automatiser la collecte.</li>
+              <li>Les résultats sont exportés pour une analyse ultérieure.</li>
+            </ul>
+            <b>Exemple d’utilisation :</b>
+            <ul>
+              <li>Générer "site:target.com ext:sql" et scraper les résultats.</li>
+              <li>Rechercher des leaks sur github.com pour une cible donnée.</li>
+            </ul>
+            <b>Export :</b> <code>exports/&lt;date&gt;/dorks/</code> (résultats et logs).
+          </div></div>
+        </div>
+        <div class="section">
+          <h2 id="menu-help">H. Aide</h2>
+          <div class="card"><div class="card-body">
+            <b>Bienvenue dans la documentation complète de la toolbox !</b> <br><br>
+            Cette page détaille chaque menu et sous-menu, explique les champs à remplir, donne des exemples concrets, et fournit des conseils pour chaque fonctionnalité. <br><br>
+            <ul>
+              <li><b>Navigation :</b> Utilisez le menu principal pour accéder à chaque module. Sélectionnez le chiffre ou la lettre correspondante.</li>
+              <li><b>Menus disponibles :</b>
+                <ul>
+                  <li>1. Vulnérabilités & Exploitation</li>
+                  <li>2. Authentification & Bruteforce</li>
+                  <li>3. Fuzzing & Tests d'injection</li>
+                  <li>4. Reconnaissance & OSINT</li>
+                  <li>5. Post-exploitation & Loot</li>
+                  <li>6. Rapports & Export</li>
+                  <li>7. Outils offensifs & Exploitation</li>
+                  <li>8. Loot automatique</li>
+                  <li>9. Escalade de privilèges</li>
+                  <li>10. Google Dorks</li>
+                </ul>
+              </li>
+              <li><b>Pour chaque module :</b> Consultez la section dédiée plus bas pour obtenir :
+                <ul>
+                  <li>L’objectif du module</li>
+                  <li>Le public cible</li>
+                  <li>Les sous-menus (si présents)</li>
+                  <li>Les champs demandés (et leur explication)</li>
+                  <li>Des explications pédagogiques sur le fonctionnement</li>
+                  <li>Des exemples d’utilisation concrets</li>
+                  <li>Le format et l’emplacement des exports</li>
+                </ul>
+              </li>
+              <li><b>Conseils :</b> <br>
+                <ul>
+                  <li>Remplissez chaque champ demandé pour éviter les erreurs.</li>
+                  <li>Consultez les exemples pour bien comprendre l’usage de chaque module.</li>
+                  <li>Les exports sont toujours organisés par date et par module pour un suivi facile.</li>
+                </ul>
+              </li>
+            </ul>
+            <b>Besoin d’aide supplémentaire ?</b> Contactez l’auteur ou consultez la FAQ.<br>
+          </div></div>
+        </div>
+{{ ... }}
+        <div class="section">
+          <h2>Navigation & Utilisation</h2>
+          <ul class="list-group list-group-flush mb-3">
+            <li class="list-group-item bg-dark text-light">Choisissez une option du menu principal pour accéder aux modules correspondants.</li>
+            <li class="list-group-item bg-dark text-light">Chaque module offre des sous-menus et des descriptions détaillées.</li>
+            <li class="list-group-item bg-dark text-light">Les exports, rapports et logs sont automatiquement rangés dans <code>exports/&lt;date&gt;/&lt;type&gt;/</code>.</li>
+            <li class="list-group-item bg-dark text-light">Appuyez sur <b>?</b> pour réafficher le menu à tout moment.</li>
+            <li class="list-group-item bg-dark text-light">Appuyez sur <b>H</b> pour afficher cette page d'aide dans votre navigateur.</li>
+          </ul>
+        </div>
+        <div class="section">
+          <h2>Exports & Organisation</h2>
+          <ul class="list-group list-group-flush mb-3">
+            <li class="list-group-item bg-dark text-light">Tous les fichiers générés sont rangés dans <code>exports/&lt;date&gt;/&lt;type&gt;/</code> (ex : <code>exploits</code>, <code>loot</code>, <code>osint</code>…)</li>
+            <li class="list-group-item bg-dark text-light">Les rapports sont disponibles en <code>.md</code>, <code>.txt</code>, <code>.json</code> selon les modules.</li>
+          </ul>
+        </div>
+        <div class="section">
+          <h2>Support & Personnalisation</h2>
+          <ul class="list-group list-group-flush mb-3">
+            <li class="list-group-item bg-dark text-light">Pour toute question ou suggestion, contactez l’équipe ou modifiez le code source.</li>
+            <li class="list-group-item bg-dark text-light">Modules personnalisables : ajoutez vos propres scripts ou adaptez les exports.</li>
+          </ul>
+        </div>
+        <div class="footer">
+          HACKBOX &copy; 2025 – Pentest & Red Team Toolkit<br>
+          <small>Documentation générée automatiquement.</small>
+        </div>
+      </main>
+    </div>
+  </div>
+  <!-- BOUTON RETOUR EN HAUT -->
+  <button id="backToTop" title="Retour en haut" aria-label="Retour en haut">↑</button>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function highlightText(text) {
+      if (!text) return;
+      const filter = text.toLowerCase();
+      document.querySelectorAll('.section').forEach(section => {
+        // Nettoie les anciens highlights
+        section.innerHTML = section.innerHTML.replace(/<mark>(.*?)<\/mark>/g, '$1');
+        if (filter.length > 1) {
+          // Highlight dans le texte de la section
+          section.innerHTML = section.innerHTML.replace(new RegExp(`(${filter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'), '<mark>$1</mark>');
+        }
+      });
+    }
+    function filterMenu() {
+      const input = document.getElementById('menuSearch');
+      const filter = input.value.toLowerCase();
+      const menu = document.getElementById('menuList');
+      const links = menu.getElementsByTagName('a');
+      // On va aussi filtrer les sections de la page
+      const sections = document.querySelectorAll('.section');
+      let firstMatch = null;
+      for (let i = 0; i < links.length; i++) {
+        const anchor = links[i];
+        const sectionId = anchor.getAttribute('href').replace('#', '');
+        const section = document.getElementById(sectionId);
+        let sectionText = '';
+        if (section) {
+          sectionText = section.parentElement.innerText.toLowerCase();
+        }
+        // On affiche le lien si le texte du menu OU le contenu de la section matche
+        const match = (anchor.textContent || anchor.innerText).toLowerCase().includes(filter)
+          || sectionText.includes(filter);
+        anchor.style.display = match ? '' : 'none';
+        // On masque la section si elle ne matche pas
+        if (section && section.parentElement) {
+          section.parentElement.style.display = match ? '' : 'none';
+        }
+        if (match && !firstMatch && section) {
+          firstMatch = section;
+        }
+      }
+      // Highlight le texte trouvé
+      highlightText(input.value);
+      // Scroll automatique sur le premier résultat trouvé
+      if (firstMatch) {
+        firstMatch.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+    // Focus auto au chargement (sécurité)
+    window.addEventListener('DOMContentLoaded', function() {
+      const search = document.getElementById('menuSearch');
+      if (search) search.focus();
+    });
+    // Scrollspy : surligne la section active dans le menu
+    window.addEventListener('scroll', function() {
+      const sections = Array.from(document.querySelectorAll('.section h2'));
+      let current = null;
+      const scrollY = window.scrollY || window.pageYOffset;
+      for (let i = 0; i < sections.length; i++) {
+        const sec = sections[i];
+        if (sec.offsetTop - 80 <= scrollY) {
+          current = sec;
+        }
+      }
+      document.querySelectorAll('.anchor-menu .list-group-item').forEach(a => a.classList.remove('scrollspy-active'));
+      if (current) {
+        const id = current.id;
+        const activeLink = document.querySelector('.anchor-menu .list-group-item[href="#'+id+'"]');
+        if (activeLink) activeLink.classList.add('scrollspy-active');
+      }
+    });
+    // Bouton retour en haut
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 300) {
+        backToTop.style.display = 'flex';
+      } else {
+        backToTop.style.display = 'none';
+      }
+    });
+    backToTop.onclick = function() {
+      window.scrollTo({top:0,behavior:'smooth'});
+    };
+  </script>
+</body>
+</html>

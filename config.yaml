@@ -1,0 +1,20 @@
+# Exemple de configuration initiale pour security_toolbox
+scan:
+  ports: [22, 80, 443]
+  timeout: 2
+  max_ports: 1000
+vuln:
+  cve_api_url: "https://cve.circl.lu/api"
+auth:
+  ssh_max_attempts: 5
+  http_max_attempts: 5
+sniff:
+  interface: "eth0"
+shodan:
+  api_key: "VOTRE_CLE_API_SHODAN"
+censys:
+  api_id: "VOTRE_ID_CENSYS"
+  api_secret: "VOTRE_SECRET_CENSYS"
+report:
+  format: "txt"
+  output: "report.txt"

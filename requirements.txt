@@ -1,0 +1,10 @@
+pyyaml
+pytest
+coverage
+argparse
+requests
+paramiko
+scapy
+pyshark
+fpdf
+beautifulsoup4
