@@ -17,7 +17,7 @@ import os
 init(autoreset=True)
 
 MENU_BORDER = f"{Fore.BLUE}{'═'*56}{Style.RESET_ALL}"
-MENU_HEADER = f"{Fore.CYAN}{Style.BRIGHT}║   HACKBOX - Pentest Toolkit   {Style.RESET_ALL}"
+MENU_HEADER = f"{Fore.CYAN}{Style.BRIGHT}║   HACKBOX \033[90mBy HYPIJUMP\033[0m - Pentest Toolkit   {Style.RESET_ALL}"
 
 STATUS_ICONS = {
     'info': f"{Fore.CYAN}ℹ{Style.RESET_ALL}",
@@ -32,14 +32,11 @@ def print_ascii_art():
     f = Figlet(font='slant')
     hackbox_ascii = f.renderText('HACKBOX')
     print(f"{Fore.GREEN}{Style.BRIGHT}{hackbox_ascii}{Style.RESET_ALL}")
-    print(f"{MENU_BORDER}")
-    print(f"{MENU_HEADER.center(56)}")
-    print(f"{MENU_BORDER}")
 
 
 def print_main_menu():
     print(f"{MENU_BORDER}")
-    print(f"║   HACKBOX - Pentest Toolkit   ")
+    print(MENU_HEADER)
     print(f"{MENU_BORDER}")
     print(f"║ {Fore.MAGENTA}1{Style.RESET_ALL}. Scan & Fingerprinting  {Fore.LIGHTBLACK_EX}- Découverte des ports, services, bannières{Style.RESET_ALL}")
     print(f"║ {Fore.MAGENTA}2{Style.RESET_ALL}. Vulnérabilités & Exploitation  {Fore.LIGHTBLACK_EX}- Recherche CVE, exploits, Heartbleed, Shellshock…{Style.RESET_ALL}")
@@ -54,7 +51,7 @@ def print_main_menu():
     print(f"║ {Fore.MAGENTA}11{Style.RESET_ALL}. Google Dorks  {Fore.LIGHTBLACK_EX}- Génération automatique de dorks ciblés{Style.RESET_ALL}")
     print(f"║ {Fore.MAGENTA}H{Style.RESET_ALL}. Aide  {Fore.LIGHTBLACK_EX}- Documentation & support (ouvre une page web){Style.RESET_ALL}")
     print(f"║ {Fore.MAGENTA}0{Style.RESET_ALL}. Quitter")
-    print(f"║ {Fore.CYAN}?{Style.RESET_ALL} pour réafficher ce menu à tout moment.")
+    print(f"║ ? pour réafficher ce menu à tout moment.")
     print(f"{MENU_BORDER}\n")
 
 

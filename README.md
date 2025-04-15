@@ -1,4 +1,4 @@
-# HACKBOX – Pentest & OSINT Toolkit
+# HACKBOX <span style="font-size:0.7em; vertical-align:super; color:#888;">By HYPIJUMP</span> – Pentest & OSINT Toolkit
 
 ![Python](https://img.shields.io/badge/python-3.8%2B-blue?logo=python)
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-lightgrey)
